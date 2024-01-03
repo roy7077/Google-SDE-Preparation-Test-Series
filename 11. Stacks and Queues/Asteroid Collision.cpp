@@ -2,35 +2,31 @@
 // Space complexity- O(N)
 class Solution {
     public:
-    vector<int> asteroidCollision(int N, vector<int> &A) {
+    vector<int> asteroidCollision(int N, vector<int> &asteroids) {
         stack<int> st;
-        for(auto it:A)
+        for(auto it:asteroids)
         {
-            if(st.empty())
-            st.push(it);
-            else
+            bool flag=1;
+            while(!st.empty() and st.top()>0 and it<0)
             {
-                if(it>0)
-                st.push(it);
-                else
+                int top=st.top();
+                st.pop();
+                
+                if(top==(it*-1))
                 {
-                    while(!st.empty() and st.top()>0 and st.top()<abs(it))
-                    {
-                        st.pop();
-                    }
-                    
-                    if(!st.empty() and st.top()==abs(it))
-                    {
-                        st.pop();
-                        continue;
-                    }
-                    
-                    if(!st.empty() and st.top()>abs(it))
-                    continue;
-                    
-                    st.push(it);
+                    flag=0;
+                    break;
+                }
+                else if(top>(it*-1))
+                {
+                    flag=0;
+                    st.push(top);
+                    break;
                 }
             }
+            
+            if(flag)
+            st.push(it);
         }
         
         vector<int> ans;

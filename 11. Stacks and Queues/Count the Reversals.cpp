@@ -2,9 +2,6 @@
 // Space complexity- O(N)
 int countRev (string s)
 {
-    if(s.length()&1)
-    return -1;
-    
     stack<char> st;
     int cnt=0;
     for(auto it:s)
@@ -15,14 +12,17 @@ int countRev (string s)
         {
             if(st.empty())
             {
-                st.push('{');
                 cnt++;
+                st.push('{');
             }
             else
             st.pop();
         }
     }
     
-    cnt+=st.size()/2;
+    if(st.size()&1)
+    return -1;
+    
+    cnt+=(st.size())/2;
     return cnt;
 }

@@ -1,29 +1,35 @@
 // Time complexity - O(NlogN)
 // Space complexity- O(N)
+// 1st -> number
+// 2nd -> index
+typedef pair<int,int> pi;
 class Solution
 {
     public:
-    //Function to find maximum of each subarray of size k.
-    vector <int> max_of_subarrays(int *arr, int n, int K)
+    vector<int> max_of_subarrays(int *arr, int n, int k)
     {
-       vector<int> ans;
-       priority_queue<pair<int,int>> pq;
-       for(int i=0;i<K;i++)
-       pq.push({arr[i],i});
-       
-       int i=0;
-       int j=K-1;
-       while(j<n)
-       {
-           while(!pq.empty() and pq.top().second<i)
+        priority_queue<pi> pq;
+        for(int i=0;i<k-1;i++)
+        pq.push({arr[i],i});
+        
+        vector<int> ans;
+        int i=0;
+        int j=k-1;
+        while(j<n)
+        {
+           while(!pq.empty() and pq.top().second<i) 
            pq.pop();
-           
+          
            pq.push({arr[j],j});
            ans.push_back(pq.top().first);
-           j++;
            i++;
-       }
-       
-       return ans;
+           j++;
+        }
+        
+        return ans;
     }
 };
+
+/*
+ this one is correct approach
+*/
